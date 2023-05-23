@@ -7,17 +7,20 @@ import {
   useLocation,
 } from "react-router-dom";
 import "./NavBarStyles.css";
-import { BiBookContent } from "react-icons/bi";
-import { SiPhpmyadmin } from "react-icons/si";
-import { AiOutlineDoubleRight, AiOutlineDoubleLeft, AiOutlineUserAdd } from "react-icons/ai";
+import { TbReport } from "react-icons/tb";
 import { BsArrowLeftRight } from 'react-icons/bs'
 import { FcMoneyTransfer } from "react-icons/fc";
 import { menuContext } from "../../context/MenuContext";
+import useCheckAuth from '../../hooks/UseAuth.js'
 
 
 const NavBar = () => {
-  const token = 'dffdf'
+  const { isAuthenticated } = useCheckAuth();
   //hamBurger Button
+  const handleLogout = () => {
+    window.open(`https://api.everestsound.com/auth/logout`, "self");
+  };
+
 
   const { hamBurger, setHamBurger }: any = useContext(menuContext); //!define type
 
@@ -43,16 +46,6 @@ const NavBar = () => {
       >
         <div className="flex justify-between items-center">
           <div className="flex flex-row-reverse">
-            <Link to="/" className="flex items-center space-x-3">
-              {/* <img
-                src={Logo}
-                alt="Logo"
-                className="rounded-full shadow-lg w-12 h-12 "
-              /> */}
-              <h1 className="text-2xl capitalize font-medium font-mono">
-                Rebira store
-              </h1>
-            </Link>
             <button
               onClick={() => setHamBurger(!hamBurger)}
               className="text-white mr-3 text-xl p-2 rounded-md transition-all"
@@ -63,9 +56,9 @@ const NavBar = () => {
 
           <div className="flex items-center">
             {
-              token ?
+              isAuthenticated ?
                 <button
-                  // onClick={handleLogout}
+                  onClick={handleLogout}
                   className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
@@ -106,37 +99,27 @@ const NavBar = () => {
         </div>
         <div className="mx-5">
           <ul>
-
-            <li>
+          <li>
               <NavLink
-                to="userpanel"
-                className="flex items-center  text-white text-sm py-3 px-2 my-1 rounded-xl hover:bg-red-500"
+                to="guide"
+                className="flex items-center  text-white text-lg py-3 px-2 my-1 rounded-xl hover:bg-blue-600"
               >
-                <AiOutlineUserAdd className="mx-2 text-xl" />
-                {hamBurger ? null : "user panel"}
+                <TbReport className="mx-2 text-xl" />
+                {hamBurger ? null : "guide panel"}
               </NavLink>
             </li>
 
             <li>
               <NavLink
-                to="coremodel"
-                className="flex items-center text-white text-sm py-3 px-2 my-1 rounded-xl hover:bg-red-500"
+                to="reports"
+                className="flex items-center  text-white text-lg py-3 px-2 my-1 rounded-xl hover:bg-blue-600"
               >
-                <SiPhpmyadmin className="mx-2 text-2xl" />
-                {hamBurger ? null : "core model"}
+                <TbReport className="mx-2 text-xl" />
+                {hamBurger ? null : "report panel"}
               </NavLink>
             </li>
 
-
-            <li>
-              <NavLink
-                to="records"
-                className="flex items-center  text-white text-sm py-3 px-2 my-1 rounded-xl hover:bg-red-500"
-              >
-                <BiBookContent className="mx-2 text-xl" />
-                {hamBurger ? null : "records"}
-              </NavLink>
-            </li>
+         
           </ul>
         </div>
       </div>
